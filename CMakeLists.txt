@@ -73,23 +73,22 @@ if (${PROJECT_NAME}_BUILD_TESTING)
     FetchContent_MakeAvailable(GoogleTest)
 endif()
 
-# find_package(nlohmann_json REQUIRED)
-# include(FetchContent)
-# FetchContent_Declare(
-#     CLI11
-#     GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
-#     GIT_TAG        v2.4.2
-# )
-# FetchContent_MakeAvailable(CLI11)
+include(FetchContent)
+FetchContent_Declare(
+    CLI11
+    GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+    GIT_TAG        v2.4.2
+)
+FetchContent_MakeAvailable(CLI11)
 
-# include(FetchContent)
-# FetchContent_Declare(
-#     nlohmann_json
-#     GIT_REPOSITORY https://github.com/nlohmann/json.git
-#     GIT_TAG        v3.12.0
-#     GIT_SHALLOW    TRUE
-# )
-# FetchContent_MakeAvailable(nlohmann_json)
+include(FetchContent)
+FetchContent_Declare(
+    nlohmann_json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG        v3.12.0
+    GIT_SHALLOW    TRUE
+)
+FetchContent_MakeAvailable(nlohmann_json)
 
 # find_package(Misc REQUIRED)
 # if(WIN32)
@@ -100,38 +99,11 @@ endif()
 # Libraries                                                             #
 #########################################################################
 
-
 #########################################################################
-# Executables                                                           #
+# Utilities                                                             #
 #########################################################################
 
-add_executable(LanguageAnalysis)
-
-set(SOURCES
-    main.cpp
-)
-
-target_sources(LanguageAnalysis PRIVATE ${SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
-
-target_include_directories(LanguageAnalysis
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-target_link_libraries(LanguageAnalysis
-    PRIVATE
-#    nlohmann_json::nlohmann_json
-#    CLI11::CLI11
-#    Misc::Misc
-#    Wx::Wx
-)
-
-target_compile_features(LanguageAnalysis PRIVATE cxx_std_17)
-
-set_target_properties(LanguageAnalysis PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-)
+add_subdirectory(util)
 
 #########################################################################
 # Testing                                                               #
