@@ -1,0 +1,8 @@
+# Visual Studio artifacts
+out/
+.vs/
+CMakeSettings.json
+CMakePresets.json
+
+# Araxis Merge artifacts
+*.orig
