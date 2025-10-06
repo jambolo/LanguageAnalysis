@@ -16,19 +16,7 @@ include(CMakeDependentOption)
 
 # Project-wide build options
 option(BUILD_SHARED_LIBS "Build libraries as shared libraries" OFF)
-
-# Only enable testing and packaging when this is the main project
-set(IS_TOP_LEVEL_PROJECT OFF)
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    set(IS_TOP_LEVEL_PROJECT ON)
-endif()
-
-cmake_dependent_option(LanguageAnalysis_BUILD_TESTS
-    "Build and run tests"
-    OFF
-    "IS_TOP_LEVEL_PROJECT"
-    OFF
-)
+option(LanguageAnalysis_BUILD_TESTING "Build and run tests" ON)
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
@@ -77,7 +65,7 @@ include(FetchContent)
 FetchContent_Declare(
     CLI11
     GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
-    GIT_TAG        v2.4.2
+    GIT_TAG        v2.5.0
 )
 FetchContent_MakeAvailable(CLI11)
 
@@ -103,17 +91,18 @@ FetchContent_MakeAvailable(nlohmann_json)
 # Utilities                                                             #
 #########################################################################
 
+add_subdirectory(lib)
 add_subdirectory(util)
 
 #########################################################################
 # Testing                                                               #
 #########################################################################
 
-if(LanguageAnalysis_BUILD_TESTS)
+if(LanguageAnalysis_BUILD_TESTING)
     include(CTest)
     enable_testing()
     message(STATUS "${PROJECT_NAME}: Testing is enabled.")
     add_subdirectory(test)
 else()
-    message(STATUS "Turn on LanguageAnalysis_BUILD_TESTS to build tests.")
+    message(STATUS "Turn on LanguageAnalysis_BUILD_TESTING to build tests.")
 endif()

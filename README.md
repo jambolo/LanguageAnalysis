@@ -22,16 +22,14 @@ LanguageAnalysis is a set of C++ utilities for analyzing language data, with a f
   - Supports output in both human-readable and JSON formats.
 
 - **Command-line Syntax:** `ngram_analyzer [options] <path>`
-    - **Arguments:**
-        - **Options:**
-            - `-k`: Number of top n-grams to display (ignored if --json is enabled, default: 10).
-            - `--json`: Output results in JSON format.
-    - `<path>` (positional): Path to the dictionary file.
-
-- **Example Usage:**  
+    - **Options:**
+        - `--subtlex <path>`: Path to the SUBTLEX CSV file. (required)
+        - `-k`: Number of top n-grams to display (ignored if --json is enabled, default: 10).
+        - `--json`: Output results in JSON format.
+*Example Usage:**  
     ```
-    ngram_analyzer --json dictionary.txt
-    ngram_analyzer -k 20 dictionary.txt
+    ngram_analyzer --json --subtlex SUBTLEX-US_2025-04-29.csv
+    ngram_analyzer -k 20 --subtlex SUBTLEX-US_2025-04-29.csv
     ```
 
 ## Dependencies
@@ -41,3 +39,10 @@ LanguageAnalysis is a set of C++ utilities for analyzing language data, with a f
 ## Build System
   - Uses CMake (minimum version 3.23) with Ninja generator.
   - Requires C++17.
+
+## Dataset Notes
+
+### SUBTLEX-US Dataset
+  - The SUBTLEX-US dataset is a word frequency list derived from American English subtitles, so it is biased towards contemporary spoken language use.
+  - Several words have numerical values of "#N/A" that were converted to zero.
+  - Several words have to be manually (and partially) corrected: don, dont, haven, havent. 
